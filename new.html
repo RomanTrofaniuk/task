@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+		<style> 
+		.spinner {
+			visibility: hidden;
+  /* Spinner size and color */
+  width: 1.5rem;
+  height: 1.5rem;
+  border-top-color: #444;
+  border-left-color: #444;
+
+  /* Additional spinner styles */
+  animation: spinner 400ms linear infinite;
+  border-bottom-color: transparent;
+  border-right-color: transparent;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 50%;  
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Animation styles */
+@keyframes spinner {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+/* Optional — create your own variations! */
+.spinner-large {
+  width: 5rem;
+  height: 5rem;
+  border-width: 6px;
+}
+
+.spinner-slow {
+  animation: spinner 1s linear infinite;
+}
+
+.spinner-blue {
+  border-top-color: #09d;
+  border-left-color: #09d;
+}
+	</style>
+	<script>
+	
+	window.users = [{login: 'john'}, {login: 'carl'}, {login: 'sam'}];
+
+	function CreateUser() {
+		this.login = document.getElementById('login').value;
+		this.password = document.getElementById('password').value;
+		this.firstName = document.getElementById('fName').value;
+		this.lastName = document.getElementById('lName').value;
+		this.dateOfBirth = document.getElementById('dateOfBirth').value;
+	}
+
+	function onInit() {
+		var delay = 5000;
+		var init = setTimeout(setUser, delay);
+		document.getElementById('spinner').style.visibility = 'visible';
+	}
+
+	function setUser() {
+	    const user = new CreateUser();
+	    const isExist = window.users.some(u => u.login === user.login);
+	    if (isExist) {
+	        alert('...');
+	        document.getElementById('spinner').style.visibility = 'hidden';
+
+	        return;
+	    }
+	    document.getElementById('spinner').style.visibility = 'hidden';
+		window.users.push(user); 
+	}
+
+
+
+	function userAway() {
+		var delay = 5000;
+		var init = setTimeout(removeUser, delay);
+		document.getElementById('spinner').style.visibility = 'visible';
+	}
+
+	function removeUser() {
+		var pers = document.getElementById('remove').value;
+		var shukanyiIndeks = window.users.findIndex(user => user.login === pers);
+		window.users.splice(shukanyiIndeks, 1);
+		document.getElementById('spinner').style.visibility = 'hidden';
+
+	}
+
+	</script>
+
+	
+</head>
+<body>
+	<div>
+		<input type="login" id="login" placeholder="login"> 
+		<br>	
+		<input type="password" id="password" placeholder="password">
+		<br>
+		<input type="firstName" id="fName" placeholder="First Name">
+		<br>
+		<input type="lastName" id="lName" placeholder="Last Name">
+		<br>
+		<input type="date" id="dateOfBirth" >
+		<button onclick="onInit()">Submit</button>
+		<br>
+	</div>
+	<div>
+		<input type="login" id="remove">
+		<button onclick="userAway()">Remove</button>	
+	</div>
+
+	<span class="spinner" id="spinner"></span>
+
+</body>
+</html>
